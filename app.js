@@ -60,30 +60,119 @@ const ADMIN_PIN = window.APP_SETTINGS?.admin_pin || "2024";
 const OWNER_PIN = window.APP_SETTINGS?.owner_pin || "9999";
 const ADMIN_WA = window.APP_SETTINGS?.admin_wa || "6281234567890"; // dinamis dari database via PHP
 
+const FREE_STANDARD = [
+  "Transport 70 km",
+  "Handbucket",
+  "1 Pagar pengantin",
+  "2 Buffer taman",
+  "Smoke area & Meeting konsep",
+];
+
 const PACKAGES = [
   {
-    id: "sari", name: "Paket Sari (Standard)", location: "Cocok untuk pesta kebun & rumah",
-    capacity: "Hingga 150 tamu", rating: 8.4, reviews: 71,
-    original: 10000000, promo: 8500000,
-    image: "gambar/A.jpeg",
+    id: "tenda-f", name: "Paket Tenda F", price: 11000000,
+    tendaSize: "Tenda 80 m", panggung: "Panggung + pelaminan 4–5 m",
     grad: "linear-gradient(135deg,#005FBF,#0194F3)",
-    desc: "Dekorasi backdrop minimalis 3m, mini stage, lighting standard warm-white, karpet jalan.",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi plastik 70 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 2 pcs", "Rolltop 4 pcs",
+      "Meja prasmanan 1 pcs", "Tempat nasi 1 pcs", "Termos nasi 1 pcs",
+      "Alat makan (PSG) 150 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 1", "Kenceng 1", "Langseng 1",
+    ],
+    freeItems: FREE_STANDARD,
   },
   {
-    id: "kirana", name: "Paket Kirana (Modern)", location: "Favorit untuk resepsi gedung & halaman luas",
-    capacity: "Hingga 300 tamu", rating: 8.7, reviews: 240,
-    original: 18000000, promo: 15000000,
-    image: "gambar/B.jpeg",
+    id: "tenda-e", name: "Paket Tenda E", price: 12000000,
+    tendaSize: "Tenda 100 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#0194F3,#00A5FF)",
-    desc: "Dekorasi pelaminan modern 6m, panggung utama, mini gallery, gate masuk, artificial flowers premium.",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi plastik 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 2 pcs", "Rolltop 4 pcs",
+      "Meja prasmanan 1 pcs", "Tempat nasi 1 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 1", "Kenceng 1", "Langseng 1",
+    ],
+    freeItems: FREE_STANDARD,
   },
   {
-    id: "wangsa", name: "Paket Wangsa (VIP)", location: "Pilihan premium untuk acara besar",
-    capacity: "Hingga 600 tamu", rating: 9.1, reviews: 171,
-    original: 32000000, promo: 27500000,
-    image: "gambar/C.jpeg",
+    id: "tenda-d", name: "Paket Tenda D", price: 13500000,
+    tendaSize: "Tenda 100 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#0A64C2,#005FBF)",
-    desc: "Dekorasi premium custom 8-10m, fresh flowers mix, lighting ambient mewah, panggung megah, VIP setup.",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 2 pcs", "Rolltop 6 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 2", "Kenceng 1", "Langseng 1",
+    ],
+    freeItems: FREE_STANDARD,
+  },
+  {
+    id: "tenda-c", name: "Paket Tenda C", price: 14500000,
+    tendaSize: "Tenda 120 m", panggung: "Panggung + pelaminan 4–6 m",
+    grad: "linear-gradient(135deg,#0056B3,#0A64C2)",
+    tag: "Tenda dan Dekorasi Only",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 2 pcs", "Rolltop 8 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 2", "Kenceng 1", "Langseng 1",
+    ],
+    freeItems: [],
+  },
+  {
+    id: "tenda-b", name: "Paket Tenda B", price: 16000000,
+    tendaSize: "Tenda 160 m", panggung: "Panggung + pelaminan 4–6 m",
+    grad: "linear-gradient(135deg,#0041A3,#0056B3)",
+    tag: "Tenda dan Dekorasi Only",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 120 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 3 pcs", "Rolltop 8 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 2 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 2", "Kenceng 2", "Langseng 2",
+    ],
+    freeItems: [],
+  },
+  {
+    id: "tenda-a", name: "Paket Tenda A", price: 19000000,
+    tendaSize: "Tenda 200 m", panggung: "Panggung + pelaminan 6 m",
+    grad: "linear-gradient(135deg,#00337A,#0041A3)",
+    tag: "Tenda dan Dekorasi Only",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 150 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 3 pcs", "Rolltop 8 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 250 pcs", "Toples kerupuk 2 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 2", "Kenceng 2", "Langseng 2",
+    ],
+    freeItems: [],
   },
 ];
 
@@ -459,37 +548,52 @@ function PinGate({ role, pin, onSuccess, onCancel }) {
 /*  Package list screen                                                    */
 /* ---------------------------------------------------------------------- */
 function PackageCard({ pkg, onSelect }) {
-  const pct = savePct(pkg.original, pkg.promo);
+  const [expanded, setExpanded] = useState(false);
   return (
     <div className="rounded-2xl overflow-hidden effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
-      <div className="h-44 relative flex items-end p-4 bg-cover bg-center" style={{ backgroundImage: `url(${pkg.image})` }}>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent"></div>
+      <div className="h-28 relative flex items-end p-4" style={{ background: pkg.grad }}>
         <span className="font-display text-white font-bold text-lg drop-shadow relative z-10">{pkg.name}</span>
-        <span className="absolute top-3 left-3 px-2 py-1 rounded-lg font-body text-[11px] font-bold flex items-center gap-1 z-10" style={{ backgroundColor: "rgba(255,255,255,0.92)", color: C.ink }}>
-          <Icon name="Star" size={11} fill={C.gold} color={C.gold} /> {pkg.rating.toFixed(1)}/10
-        </span>
+        {pkg.tag && (
+          <span className="absolute top-3 left-3 px-2 py-1 rounded-lg font-body text-[10px] font-bold z-10" style={{ backgroundColor: "rgba(255,255,255,0.92)", color: C.ink }}>
+            {pkg.tag}
+          </span>
+        )}
       </div>
       <div className="p-4">
-        <div className="flex items-center gap-1 mb-1">
-          <Icon name="MapPin" size={13} color={C.muted} />
-          <span className="font-body text-xs" style={{ color: C.muted }}>{pkg.location}</span>
+        <div className="flex items-center gap-1.5 mb-1">
+          <Icon name="Warehouse" size={13} color={C.blueDeep} />
+          <span className="font-body text-xs font-semibold" style={{ color: C.blueDeep }}>{pkg.tendaSize}</span>
         </div>
-        <div className="flex items-center gap-1.5 mb-2">
-          <Icon name="Users" size={13} color={C.blueDeep} />
-          <span className="font-body text-xs font-semibold" style={{ color: C.blueDeep }}>{pkg.capacity}</span>
-          <span className="font-body text-xs" style={{ color: C.muted }}>· ({pkg.reviews} ulasan)</span>
+        <div className="flex items-center gap-1 mb-3">
+          <Icon name="LayoutPanelTop" size={13} color={C.muted} />
+          <span className="font-body text-xs" style={{ color: C.muted }}>{pkg.panggung}</span>
         </div>
-        <p className="font-body text-xs mb-3" style={{ color: C.muted }}>{pkg.desc}</p>
-        <div className="flex items-end justify-between">
-          <div>
-            <span className="font-body text-xs line-through" style={{ color: C.muted }}>{fmtIDR(pkg.original)}</span>
-            <div className="font-display text-lg font-bold" style={{ color: C.orange }}>{fmtIDR(pkg.promo)}</div>
-          </div>
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-body text-[11px] font-bold" style={{ backgroundColor: C.orangeSoft, color: C.orange }}>
-            <Icon name="BadgePercent" size={12} /> Hemat {pct}%
-          </span>
-        </div>
-        <Button variant="primary" className="w-full mt-3 effect-3d-btn" onClick={() => onSelect(pkg)}>
+        <div className="font-display text-xl font-bold mb-3" style={{ color: C.orange }}>{fmtIDR(pkg.price)}</div>
+
+        <button type="button" onClick={() => setExpanded((e) => !e)} className="font-body text-xs font-semibold flex items-center gap-1 mb-3" style={{ color: C.blueDeep }}>
+          {expanded ? "Sembunyikan detail" : `Lihat ${pkg.features.length} fasilitas`}
+          <Icon name={expanded ? "ChevronUp" : "ChevronDown"} size={13} />
+        </button>
+        {expanded && (
+          <ul className="font-body text-xs space-y-1.5 mb-4">
+            {pkg.features.map((f, i) => (
+              <li key={i} className="flex items-start gap-1.5" style={{ color: C.ink }}>
+                <Icon name="Check" size={12} color={C.green} className="mt-0.5" /> <span>{f}</span>
+              </li>
+            ))}
+            {pkg.freeItems.length > 0 && (
+              <>
+                <li className="font-semibold pt-1" style={{ color: C.ink }}>Gratis:</li>
+                {pkg.freeItems.map((f, i) => (
+                  <li key={"free" + i} className="flex items-start gap-1.5" style={{ color: C.muted }}>
+                    <Icon name="Gift" size={12} color={C.amber} className="mt-0.5" /> <span>{f}</span>
+                  </li>
+                ))}
+              </>
+            )}
+          </ul>
+        )}
+        <Button variant="primary" className="w-full effect-3d-btn" onClick={() => onSelect(pkg)}>
           Pilih Paket Ini <Icon name="ArrowRight" size={15} />
         </Button>
       </div>
@@ -552,7 +656,7 @@ function BookingFormScreen({ pkg, bookings, addBooking, onBack, onSubmitted }) {
       id: uuid(),
       code: genCode(), groomName: form.groomName.trim(), brideName: form.brideName.trim(),
       whatsapp: form.whatsapp.trim(), address: form.address.trim(), date: form.date, packageId: pkg.id, packageName: pkg.name,
-      price: pkg.promo, bookingPay: 2000000, pelunasan: 0, guests: form.guests, notes: form.notes.trim(),
+      price: pkg.price, bookingPay: 2000000, pelunasan: 0, guests: form.guests, notes: form.notes.trim(),
       status: "pending", createdAt: new Date().toISOString(),
     };
     await addBooking(booking);
@@ -565,11 +669,12 @@ function BookingFormScreen({ pkg, bookings, addBooking, onBack, onSubmitted }) {
       <TopBar gradient title="FORM RESERVASI" subtitle="Silahkan isi form dengan benar" onBack={onBack} />
       <div className="max-w-xl mx-auto px-4 sm:px-6 -mt-4 pb-10">
         <div className="rounded-2xl p-3 mb-4 flex items-center gap-3 effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
-          <div className="w-16 h-16 rounded-xl flex-shrink-0 bg-cover bg-center" style={{ backgroundImage: `url(${pkg.image})` }}>
+          <div className="w-16 h-16 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: pkg.grad }}>
+            <Icon name="Warehouse" size={24} color="#fff" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-display text-sm font-bold truncate" style={{ color: C.ink }}>{pkg.name}</p>
-            <p className="font-body text-xs" style={{ color: C.muted }}>{pkg.capacity} · Harga Paket: {fmtIDR(pkg.promo)}</p>
+            <p className="font-body text-xs" style={{ color: C.muted }}>{pkg.tendaSize} · Harga Paket: {fmtIDR(pkg.price)}</p>
           </div>
           <div className="flex-shrink-0 text-right">
             <p className="font-body text-[10px]" style={{ color: C.muted }}>Biaya Booking (DP)</p>
@@ -1172,7 +1277,7 @@ function ManualBookingModal({ onClose, bookings, addBooking }) {
     await addBooking({
       id: uuid(), code: genCode(),
       groomName: form.groomName, brideName: form.brideName, whatsapp: form.whatsapp, address: form.address, date: form.date,
-      packageId: p.id, packageName: p.name, price: p.promo, bookingPay: 2000000, pelunasan: 0, guests: form.guests,
+      packageId: p.id, packageName: p.name, price: p.price, bookingPay: 2000000, pelunasan: 0, guests: form.guests,
       notes: "Booking dicatat manual oleh admin.", status: "confirmed", createdAt: new Date().toISOString(),
     });
     onClose();
@@ -1211,7 +1316,7 @@ function OwnerView({ bookings, reload, transactions }) {
     return Object.entries(map).sort().map(([k, v]) => { const [y, m] = k.split("-"); return { bulan: `${MONTHS_ID[Number(m) - 1].slice(0, 3)} ${y.slice(2)}`, jumlah: v }; });
   }, [confirmed]);
   const byPackage = useMemo(() => PACKAGES.map((p) => ({ name: p.name, value: confirmed.filter((b) => b.packageId === p.id).length })).filter((p) => p.value > 0), [confirmed]);
-  const pieColors = [C.blue, C.orange, C.green];
+  const pieColors = [C.blue, C.orange, C.green, C.blueDeep, C.amber, C.red];
 
   // Default to current month YYYY-MM
   const currentMonthISO = useMemo(() => new Date().toISOString().slice(0, 7), []);
