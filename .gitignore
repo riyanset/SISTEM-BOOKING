@@ -1,0 +1,8 @@
+/scratch/
+.agents/
+.gemini/
+*.log
+*.tmp
+*.bak
+.system_generated/
+/database.sql
