@@ -13,6 +13,10 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 // ── GET: Ambil semua transaksi ────────────────────────────────
 if ($method === 'GET') {
+    if (!$db) {
+        jsonResponse([]); // mode simulasi: list kosong
+    }
+
     $stmt = $db->query("SELECT * FROM `transactions` ORDER BY `date` DESC, `created_at` DESC");
     $rows = $stmt->fetchAll();
 
@@ -51,6 +55,10 @@ if ($method === 'POST') {
         jsonResponse(['error' => 'Jenis transaksi tidak valid.'], 400);
     }
 
+    if (!$db) {
+        jsonResponse(['success' => true, 'id' => $input['id'], 'simulated' => true], 201);
+    }
+
     $stmt = $db->prepare("
         INSERT INTO `transactions`
             (`id`, `date`, `type`, `amount`, `description`, `created_at`)
@@ -75,6 +83,10 @@ if ($method === 'DELETE') {
     $id = $_GET['id'] ?? null;
     if (!$id) {
         jsonResponse(['error' => 'Parameter id wajib.'], 400);
+    }
+
+    if (!$db) {
+        jsonResponse(['success' => true, 'deleted' => 1, 'simulated' => true]);
     }
 
     $stmt = $db->prepare("DELETE FROM `transactions` WHERE `id` = :id");

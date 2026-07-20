@@ -14,6 +14,10 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 // ── GET: Ambil semua booking ─────────────────────────────────
 if ($method === 'GET') {
+    if (!$db) {
+        jsonResponse([]); // mode simulasi: list kosong
+    }
+
     $stmt = $db->query("SELECT * FROM `bookings` ORDER BY `created_at` DESC");
     $rows = $stmt->fetchAll();
 
@@ -56,6 +60,10 @@ if ($method === 'POST') {
         if (empty($input[$field]) && $input[$field] !== 0) {
             jsonResponse(['error' => "Field '$field' wajib diisi."], 400);
         }
+    }
+
+    if (!$db) {
+        jsonResponse(['success' => true, 'id' => $input['id'], 'simulated' => true], 201);
     }
 
     $stmt = $db->prepare("
@@ -133,6 +141,10 @@ if ($method === 'PUT') {
         jsonResponse(['error' => 'Tidak ada field yang di-update.'], 400);
     }
 
+    if (!$db) {
+        jsonResponse(['success' => true, 'updated' => 1, 'simulated' => true]);
+    }
+
     $sql = "UPDATE `bookings` SET " . implode(', ', $sets) . " WHERE `id` = :id";
     $stmt = $db->prepare($sql);
     $stmt->execute($params);
@@ -145,6 +157,10 @@ if ($method === 'DELETE') {
     $id = $_GET['id'] ?? null;
     if (!$id) {
         jsonResponse(['error' => 'Parameter id wajib.'], 400);
+    }
+
+    if (!$db) {
+        jsonResponse(['success' => true, 'deleted' => 1, 'simulated' => true]);
     }
 
     $stmt = $db->prepare("DELETE FROM `bookings` WHERE `id` = :id");

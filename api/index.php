@@ -2,7 +2,7 @@
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');
 header('Expires: 0');
-require_once __DIR__ . '/api/config.php';
+require_once __DIR__ . '/config.php';
 
 // Default settings as fallback
 $settings = [
@@ -13,11 +13,13 @@ $settings = [
 
 try {
     $db = getDB();
-    $stmt = $db->query("SELECT * FROM `settings`");
-    while ($row = $stmt->fetch()) {
-        $settings[$row['setting_key']] = $row['setting_value'];
+    if ($db) {
+        $stmt = $db->query("SELECT * FROM `settings`");
+        while ($row = $stmt->fetch()) {
+            $settings[$row['setting_key']] = $row['setting_value'];
+        }
     }
-} catch (Exception $e) {
+} catch (Throwable $e) {
     // Silently fallback to defaults if database fails
 }
 ?>
@@ -57,7 +59,7 @@ try {
 
 <!-- Memuat app.js secara inline agar tidak diblokir oleh CORS/Path/Space di browser -->
 <script type="text/babel" data-presets="react">
-<?php include __DIR__ . '/app.js'; ?>
+<?php include __DIR__ . '/../app.js'; ?>
 </script>
 </body>
 </html>

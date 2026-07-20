@@ -2,31 +2,13 @@
   "functions": {
     "api/**/*.php": {
       "runtime": "vercel-php@0.8.0"
-    },
-    "index.php": {
-      "runtime": "vercel-php@0.8.0"
     }
   },
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/js/(.*)",
-      "dest": "/js/$1"
-    },
-    {
-      "src": "/gambar/(.*)",
-      "dest": "/gambar/$1"
-    },
-    {
-      "src": "/style.css",
-      "dest": "/style.css"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.php"
-    }
+    { "src": "/js/(.*)", "dest": "/js/$1" },
+    { "src": "/gambar/(.*)", "dest": "/gambar/$1" },
+    { "src": "/style.css", "dest": "/style.css" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/api/index.php" }
   ]
 }
