@@ -8,7 +8,7 @@ require_once __DIR__ . '/config.php';
 $settings = [
     'admin_pin' => '2024',
     'owner_pin' => '9999',
-    'admin_wa'  => '089647796129'
+    'admin_wa'  => '6289647796129'
 ];
 
 try {
