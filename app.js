@@ -1,15 +1,16 @@
+
 const { useState, useEffect, useMemo, useCallback, useRef } = React;
 const {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend,
 } = Recharts;
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  API URL — endpoint PHP backend                                         */
 /* ---------------------------------------------------------------------- */
 const API_URL = "api/bookings.php";
 const API_TX_URL = "api/transactions.php";
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Icon (pengganti lucide-react, memakai lucide vanilla via window.lucide) */
 /* ---------------------------------------------------------------------- */
@@ -29,7 +30,7 @@ function Icon({ name, size = 16, color = "currentColor", fill = "none", strokeWi
   }, [name, size, color, fill, strokeWidth]);
   return <span ref={ref} className={className} style={{ display: "inline-flex", flexShrink: 0, lineHeight: 0, ...style }} />;
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Tokens                                                                  */
 /* ---------------------------------------------------------------------- */
@@ -55,47 +56,136 @@ const C = {
 };
 const HEADER_GRAD = `linear-gradient(135deg, #0194F3 0%, #0056B3 100%)`;
 const BTN_GRAD = `linear-gradient(90deg, #0194F3 0%, #007CEF 100%)`;
-
+ 
 const ADMIN_PIN = window.APP_SETTINGS?.admin_pin || "2024";
 const OWNER_PIN = window.APP_SETTINGS?.owner_pin || "9999";
 const ADMIN_WA = window.APP_SETTINGS?.admin_wa || "6281234567890"; // dinamis dari database via PHP
-
+ 
+const FREE_STANDARD = [
+  "Transport 70 km",
+  "Handbucket",
+  "1 Pagar pengantin",
+  "2 Buffer taman",
+  "Smoke area & Meeting konsep",
+];
+ 
 const PACKAGES = [
   {
-    id: "sari", name: "Paket Sari (Standard)", location: "Cocok untuk pesta kebun & rumah",
-    capacity: "Hingga 150 tamu", rating: 8.4, reviews: 71,
-    original: 10000000, promo: 8500000,
-    image: "gambar/A.jpeg",
+    id: "tenda-f", name: "Paket Tenda F", price: 11000000,
+    tendaSize: "Tenda 80 m", panggung: "Panggung + pelaminan 4–5 m",
     grad: "linear-gradient(135deg,#005FBF,#0194F3)",
-    desc: "Dekorasi backdrop minimalis 3m, mini stage, lighting standard warm-white, karpet jalan.",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi plastik 70 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 2 pcs", "Rolltop 4 pcs",
+      "Meja prasmanan 1 pcs", "Tempat nasi 1 pcs", "Termos nasi 1 pcs",
+      "Alat makan (PSG) 150 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 1", "Kenceng 1", "Langseng 1",
+    ],
+    freeItems: FREE_STANDARD,
   },
   {
-    id: "kirana", name: "Paket Kirana (Modern)", location: "Favorit untuk resepsi gedung & halaman luas",
-    capacity: "Hingga 300 tamu", rating: 8.7, reviews: 240,
-    original: 18000000, promo: 15000000,
-    image: "gambar/B.jpeg",
+    id: "tenda-e", name: "Paket Tenda E", price: 12000000,
+    tendaSize: "Tenda 100 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#0194F3,#00A5FF)",
-    desc: "Dekorasi pelaminan modern 6m, panggung utama, mini gallery, gate masuk, artificial flowers premium.",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi plastik 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 2 pcs", "Rolltop 4 pcs",
+      "Meja prasmanan 1 pcs", "Tempat nasi 1 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 1", "Kenceng 1", "Langseng 1",
+    ],
+    freeItems: FREE_STANDARD,
   },
   {
-    id: "wangsa", name: "Paket Wangsa (VIP)", location: "Pilihan premium untuk acara besar",
-    capacity: "Hingga 600 tamu", rating: 9.1, reviews: 171,
-    original: 32000000, promo: 27500000,
-    image: "gambar/C.jpeg",
+    id: "tenda-d", name: "Paket Tenda D", price: 13500000,
+    tendaSize: "Tenda 100 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#0A64C2,#005FBF)",
-    desc: "Dekorasi premium custom 8-10m, fresh flowers mix, lighting ambient mewah, panggung megah, VIP setup.",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 2 pcs", "Rolltop 6 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 2", "Kenceng 1", "Langseng 1",
+    ],
+    freeItems: FREE_STANDARD,
+  },
+  {
+    id: "tenda-c", name: "Paket Tenda C", price: 14500000,
+    tendaSize: "Tenda 120 m", panggung: "Panggung + pelaminan 4–6 m",
+    grad: "linear-gradient(135deg,#0056B3,#0A64C2)",
+    tag: "Tenda dan Dekorasi Only",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 2 pcs", "Rolltop 8 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 2", "Kenceng 1", "Langseng 1",
+    ],
+    freeItems: [],
+  },
+  {
+    id: "tenda-b", name: "Paket Tenda B", price: 16000000,
+    tendaSize: "Tenda 160 m", panggung: "Panggung + pelaminan 4–6 m",
+    grad: "linear-gradient(135deg,#0041A3,#0056B3)",
+    tag: "Tenda dan Dekorasi Only",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 120 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 3 pcs", "Rolltop 8 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 2 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 2", "Kenceng 2", "Langseng 2",
+    ],
+    freeItems: [],
+  },
+  {
+    id: "tenda-a", name: "Paket Tenda A", price: 19000000,
+    tendaSize: "Tenda 200 m", panggung: "Panggung + pelaminan 6 m",
+    grad: "linear-gradient(135deg,#00337A,#0041A3)",
+    tag: "Tenda dan Dekorasi Only",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 150 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign", "Stand box", "Mini garden",
+      "Blower 3 pcs", "Rolltop 8 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 250 pcs", "Toples kerupuk 2 pcs", "Wadah es buah 1 pcs",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+      "Semawar 2", "Kenceng 2", "Langseng 2",
+    ],
+    freeItems: [],
   },
 ];
-
+ 
 const STATUS_META = {
   pending:   { label: "Menunggu Konfirmasi", color: C.amber, soft: C.amberSoft },
   confirmed: { label: "Terkonfirmasi",        color: C.green, soft: C.greenSoft },
   rejected:  { label: "Ditolak",              color: C.red,   soft: C.redSoft   },
 };
-
+ 
 const MONTHS_ID = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 const DAYS_ID = ["Min","Sen","Sel","Rab","Kam","Jum","Sab"];
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Helpers                                                                */
 /* ---------------------------------------------------------------------- */
@@ -131,7 +221,7 @@ const fmtMonthYear = (myStr) => {
   const [y, m] = myStr.split("-").map(Number);
   return `${MONTHS_ID[m - 1]} ${y}`;
 };
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Storage hook — fetch dari PHP API                                      */
 /* ---------------------------------------------------------------------- */
@@ -139,7 +229,7 @@ function useBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+ 
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -155,9 +245,9 @@ function useBookings() {
       setLoading(false);
     }
   }, []);
-
+ 
   useEffect(() => { load(); }, [load]);
-
+ 
   const addBooking = useCallback(async (b) => {
     try {
       const res = await fetch(API_URL, {
@@ -174,7 +264,7 @@ function useBookings() {
       setError(e.message || "Gagal menyimpan booking.");
     }
   }, []);
-
+ 
   const updateBooking = useCallback(async (id, patch) => {
     try {
       const res = await fetch(`${API_URL}?id=${encodeURIComponent(id)}`, {
@@ -191,7 +281,7 @@ function useBookings() {
       setError(e.message || "Gagal mengupdate booking.");
     }
   }, []);
-
+ 
   const removeBooking = useCallback(async (id) => {
     try {
       const res = await fetch(`${API_URL}?id=${encodeURIComponent(id)}`, {
@@ -206,10 +296,10 @@ function useBookings() {
       setError(e.message || "Gagal menghapus booking.");
     }
   }, []);
-
+ 
   return { bookings, loading, error, reload: load, addBooking, updateBooking, removeBooking };
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Storage hook — fetch transaksi dari PHP API                            */
 /* ---------------------------------------------------------------------- */
@@ -217,7 +307,7 @@ function useTransactions() {
   const [transactions, setTransactions] = useState([]);
   const [txLoading, setTxLoading] = useState(true);
   const [txError, setTxError] = useState(null);
-
+ 
   const loadTx = useCallback(async () => {
     setTxLoading(true);
     setTxError(null);
@@ -233,9 +323,9 @@ function useTransactions() {
       setTxLoading(false);
     }
   }, []);
-
+ 
   useEffect(() => { loadTx(); }, [loadTx]);
-
+ 
   const addTransaction = useCallback(async (tx) => {
     try {
       const res = await fetch(API_TX_URL, {
@@ -252,7 +342,7 @@ function useTransactions() {
       setTxError(e.message || "Gagal mencatat transaksi.");
     }
   }, []);
-
+ 
   const removeTransaction = useCallback(async (id) => {
     try {
       const res = await fetch(`${API_TX_URL}?id=${encodeURIComponent(id)}`, {
@@ -267,10 +357,10 @@ function useTransactions() {
       setTxError(e.message || "Gagal menghapus transaksi.");
     }
   }, []);
-
+ 
   return { transactions, txLoading, txError, reloadTx: loadTx, addTransaction, removeTransaction };
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Small UI atoms                                                         */
 /* ---------------------------------------------------------------------- */
@@ -283,7 +373,7 @@ const Badge = ({ status }) => {
     </span>
   );
 };
-
+ 
 const Button = ({ children, variant = "primary", className = "", style = {}, ...props }) => {
   const classMap = {
     primary: "effect-3d-btn",
@@ -301,7 +391,7 @@ const Button = ({ children, variant = "primary", className = "", style = {}, ...
     </button>
   );
 };
-
+ 
 const inputStyle = {
   width: "100%",
   padding: "12px 14px",
@@ -313,7 +403,7 @@ const inputStyle = {
   fontSize: "14px",
   outline: "none",
 };
-
+ 
 const Field = ({ label, required, children }) => (
   <label className="block mb-4">
     <span className="block font-body text-sm font-semibold mb-1.5" style={{ color: C.ink }}>
@@ -322,7 +412,7 @@ const Field = ({ label, required, children }) => (
     {children}
   </label>
 );
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Top bar                                                                */
 /* ---------------------------------------------------------------------- */
@@ -359,7 +449,7 @@ function TopBar({ title, subtitle, onBack, gradient = false, right, brandMode = 
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Calendar                                                               */
 /* ---------------------------------------------------------------------- */
@@ -367,16 +457,16 @@ function Calendar({ bookings, showNames = false, selectable = false, selected, o
   const now = new Date();
   const [view, setView] = useState({ y: now.getFullYear(), m: now.getMonth() });
   const weeks = useMemo(() => monthMatrix(view.y, view.m), [view]);
-
+ 
   const findBooking = (iso) => bookings.find((b) => b.date === iso && (b.status === "confirmed" || b.status === "pending"));
-
+ 
   const changeMonth = (delta) => {
     let m = view.m + delta, y = view.y;
     if (m < 0) { m = 11; y -= 1; }
     if (m > 11) { m = 0; y += 1; }
     setView({ y, m });
   };
-
+ 
   return (
     <div className="rounded-2xl p-4" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
       <div className="flex items-center justify-between mb-3">
@@ -423,7 +513,7 @@ function Calendar({ bookings, showNames = false, selectable = false, selected, o
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  PIN Gate                                                                */
 /* ---------------------------------------------------------------------- */
@@ -454,49 +544,64 @@ function PinGate({ role, pin, onSuccess, onCancel }) {
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Package list screen                                                    */
 /* ---------------------------------------------------------------------- */
 function PackageCard({ pkg, onSelect }) {
-  const pct = savePct(pkg.original, pkg.promo);
+  const [expanded, setExpanded] = useState(false);
   return (
     <div className="rounded-2xl overflow-hidden effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
-      <div className="h-44 relative flex items-end p-4 bg-cover bg-center" style={{ backgroundImage: `url(${pkg.image})` }}>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent"></div>
+      <div className="h-28 relative flex items-end p-4" style={{ background: pkg.grad }}>
         <span className="font-display text-white font-bold text-lg drop-shadow relative z-10">{pkg.name}</span>
-        <span className="absolute top-3 left-3 px-2 py-1 rounded-lg font-body text-[11px] font-bold flex items-center gap-1 z-10" style={{ backgroundColor: "rgba(255,255,255,0.92)", color: C.ink }}>
-          <Icon name="Star" size={11} fill={C.gold} color={C.gold} /> {pkg.rating.toFixed(1)}/10
-        </span>
+        {pkg.tag && (
+          <span className="absolute top-3 left-3 px-2 py-1 rounded-lg font-body text-[10px] font-bold z-10" style={{ backgroundColor: "rgba(255,255,255,0.92)", color: C.ink }}>
+            {pkg.tag}
+          </span>
+        )}
       </div>
       <div className="p-4">
-        <div className="flex items-center gap-1 mb-1">
-          <Icon name="MapPin" size={13} color={C.muted} />
-          <span className="font-body text-xs" style={{ color: C.muted }}>{pkg.location}</span>
+        <div className="flex items-center gap-1.5 mb-1">
+          <Icon name="Warehouse" size={13} color={C.blueDeep} />
+          <span className="font-body text-xs font-semibold" style={{ color: C.blueDeep }}>{pkg.tendaSize}</span>
         </div>
-        <div className="flex items-center gap-1.5 mb-2">
-          <Icon name="Users" size={13} color={C.blueDeep} />
-          <span className="font-body text-xs font-semibold" style={{ color: C.blueDeep }}>{pkg.capacity}</span>
-          <span className="font-body text-xs" style={{ color: C.muted }}>· ({pkg.reviews} ulasan)</span>
+        <div className="flex items-center gap-1 mb-3">
+          <Icon name="LayoutPanelTop" size={13} color={C.muted} />
+          <span className="font-body text-xs" style={{ color: C.muted }}>{pkg.panggung}</span>
         </div>
-        <p className="font-body text-xs mb-3" style={{ color: C.muted }}>{pkg.desc}</p>
-        <div className="flex items-end justify-between">
-          <div>
-            <span className="font-body text-xs line-through" style={{ color: C.muted }}>{fmtIDR(pkg.original)}</span>
-            <div className="font-display text-lg font-bold" style={{ color: C.orange }}>{fmtIDR(pkg.promo)}</div>
-          </div>
-          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-body text-[11px] font-bold" style={{ backgroundColor: C.orangeSoft, color: C.orange }}>
-            <Icon name="BadgePercent" size={12} /> Hemat {pct}%
-          </span>
-        </div>
-        <Button variant="primary" className="w-full mt-3 effect-3d-btn" onClick={() => onSelect(pkg)}>
+        <div className="font-display text-xl font-bold mb-3" style={{ color: C.orange }}>{fmtIDR(pkg.price)}</div>
+ 
+        <button type="button" onClick={() => setExpanded((e) => !e)} className="font-body text-xs font-semibold flex items-center gap-1 mb-3" style={{ color: C.blueDeep }}>
+          {expanded ? "Sembunyikan detail" : `Lihat ${pkg.features.length} fasilitas`}
+          <Icon name={expanded ? "ChevronUp" : "ChevronDown"} size={13} />
+        </button>
+        {expanded && (
+          <ul className="font-body text-xs space-y-1.5 mb-4">
+            {pkg.features.map((f, i) => (
+              <li key={i} className="flex items-start gap-1.5" style={{ color: C.ink }}>
+                <Icon name="Check" size={12} color={C.green} className="mt-0.5" /> <span>{f}</span>
+              </li>
+            ))}
+            {pkg.freeItems.length > 0 && (
+              <>
+                <li className="font-semibold pt-1" style={{ color: C.ink }}>Gratis:</li>
+                {pkg.freeItems.map((f, i) => (
+                  <li key={"free" + i} className="flex items-start gap-1.5" style={{ color: C.muted }}>
+                    <Icon name="Gift" size={12} color={C.amber} className="mt-0.5" /> <span>{f}</span>
+                  </li>
+                ))}
+              </>
+            )}
+          </ul>
+        )}
+        <Button variant="primary" className="w-full effect-3d-btn" onClick={() => onSelect(pkg)}>
           Pilih Paket Ini <Icon name="ArrowRight" size={15} />
         </Button>
       </div>
     </div>
   );
 }
-
+ 
 function PackageListScreen({ bookings, onSelectPackage, onOpenCalendar, onOpenCheck }) {
   return (
     <div>
@@ -533,7 +638,7 @@ function PackageListScreen({ bookings, onSelectPackage, onOpenCalendar, onOpenCh
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Booking form screen                                                    */
 /* ---------------------------------------------------------------------- */
@@ -543,7 +648,7 @@ function BookingFormScreen({ pkg, bookings, addBooking, onBack, onSubmitted }) {
   const [saving, setSaving] = useState(false);
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const valid = form.groomName && form.brideName && form.whatsapp && form.address && form.date;
-
+ 
   const submit = async (e) => {
     e.preventDefault();
     if (!valid) return;
@@ -552,31 +657,32 @@ function BookingFormScreen({ pkg, bookings, addBooking, onBack, onSubmitted }) {
       id: uuid(),
       code: genCode(), groomName: form.groomName.trim(), brideName: form.brideName.trim(),
       whatsapp: form.whatsapp.trim(), address: form.address.trim(), date: form.date, packageId: pkg.id, packageName: pkg.name,
-      price: pkg.promo, bookingPay: 2000000, pelunasan: 0, guests: form.guests, notes: form.notes.trim(),
+      price: pkg.price, bookingPay: 2000000, pelunasan: 0, guests: form.guests, notes: form.notes.trim(),
       status: "pending", createdAt: new Date().toISOString(),
     };
     await addBooking(booking);
     setSaving(false);
     onSubmitted(booking);
   };
-
+ 
   return (
     <div>
       <TopBar gradient title="FORM RESERVASI" subtitle="Silahkan isi form dengan benar" onBack={onBack} />
       <div className="max-w-xl mx-auto px-4 sm:px-6 -mt-4 pb-10">
         <div className="rounded-2xl p-3 mb-4 flex items-center gap-3 effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
-          <div className="w-16 h-16 rounded-xl flex-shrink-0 bg-cover bg-center" style={{ backgroundImage: `url(${pkg.image})` }}>
+          <div className="w-16 h-16 rounded-xl flex-shrink-0 flex items-center justify-center" style={{ background: pkg.grad }}>
+            <Icon name="Warehouse" size={24} color="#fff" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="font-display text-sm font-bold truncate" style={{ color: C.ink }}>{pkg.name}</p>
-            <p className="font-body text-xs" style={{ color: C.muted }}>{pkg.capacity} · Harga Paket: {fmtIDR(pkg.promo)}</p>
+            <p className="font-body text-xs" style={{ color: C.muted }}>{pkg.tendaSize} · Harga Paket: {fmtIDR(pkg.price)}</p>
           </div>
           <div className="flex-shrink-0 text-right">
             <p className="font-body text-[10px]" style={{ color: C.muted }}>Biaya Booking (DP)</p>
             <p className="font-display text-sm font-bold" style={{ color: C.orange }}>Rp 2.000.000</p>
           </div>
         </div>
-
+ 
         <form onSubmit={submit} className="rounded-2xl p-5 effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
           <Field label="Nama Mempelai Pria" required>
             <input style={inputStyle} value={form.groomName} onChange={set("groomName")} placeholder="Masukan nama mempelai pria" />
@@ -615,7 +721,7 @@ function BookingFormScreen({ pkg, bookings, addBooking, onBack, onSubmitted }) {
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Confirmation screen                                                    */
 /* ---------------------------------------------------------------------- */
@@ -654,7 +760,7 @@ function ConfirmationScreen({ booking, onDone }) {
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Calendar / Check screens (simple wrappers)                             */
 /* ---------------------------------------------------------------------- */
@@ -668,7 +774,7 @@ function CalendarScreen({ bookings, onBack }) {
     </div>
   );
 }
-
+ 
 function StatusChecker({ bookings, onBack }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState(null);
@@ -707,7 +813,7 @@ function StatusChecker({ bookings, onBack }) {
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  User flow controller                                                   */
 /* ---------------------------------------------------------------------- */
@@ -715,7 +821,7 @@ function UserView({ bookings, addBooking }) {
   const [screen, setScreen] = useState("packages"); // packages | form | confirmation | calendar | check
   const [pkg, setPkg] = useState(null);
   const [lastBooking, setLastBooking] = useState(null);
-
+ 
   if (screen === "form" && pkg) {
     return <BookingFormScreen pkg={pkg} bookings={bookings} addBooking={addBooking}
       onBack={() => setScreen("packages")}
@@ -726,7 +832,7 @@ function UserView({ bookings, addBooking }) {
   }
   if (screen === "calendar") return <CalendarScreen bookings={bookings} onBack={() => setScreen("packages")} />;
   if (screen === "check") return <StatusChecker bookings={bookings} onBack={() => setScreen("packages")} />;
-
+ 
   return (
     <PackageListScreen
       bookings={bookings}
@@ -736,27 +842,27 @@ function UserView({ bookings, addBooking }) {
     />
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Admin Booking Card with Inline Pelunasan Editor                       */
 /* ---------------------------------------------------------------------- */
 function AdminBookingCard({ b, updateBooking, removeBooking }) {
   const [pelunasanVal, setPelunasanVal] = useState(b.pelunasan || 0);
-
+ 
   const dp = b.bookingPay || 2000000;
   const total = b.price || 0;
   const currentPelunasan = b.pelunasan || 0;
   const sisa = total - dp - currentPelunasan;
   const isLunas = sisa <= 0;
-
+ 
   useEffect(() => {
     setPelunasanVal(b.pelunasan || 0);
   }, [b.pelunasan]);
-
+ 
   const handleSave = () => {
     updateBooking(b.id, { pelunasan: Number(pelunasanVal) });
   };
-
+ 
   return (
     <div className="rounded-2xl p-5 effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
       <div className="flex items-start justify-between gap-3 flex-wrap">
@@ -779,7 +885,7 @@ function AdminBookingCard({ b, updateBooking, removeBooking }) {
             Alamat: <span className="font-semibold text-stone-700">{b.address || "-"}</span>
           </p>
           {b.notes && <p className="font-body text-xs mt-1.5 italic" style={{ color: C.muted }}>"{b.notes}"</p>}
-
+ 
           {/* Financial Breakdown */}
           <div className="mt-3 pt-3 border-t border-dashed border-stone-200 flex flex-wrap gap-4 items-center text-xs font-body">
             <div>
@@ -827,7 +933,7 @@ function AdminBookingCard({ b, updateBooking, removeBooking }) {
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Admin View                                                             */
 /* ---------------------------------------------------------------------- */
@@ -836,11 +942,11 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
   const [manual, setManual] = useState(false);
   const [adminTab, setAdminTab] = useState("bookings"); // "bookings" | "finance"
   const [showTxModal, setShowTxModal] = useState(false);
-
+ 
   // Default to current month YYYY-MM
   const currentMonthISO = useMemo(() => new Date().toISOString().slice(0, 7), []);
   const [selectedMonth, setSelectedMonth] = useState(currentMonthISO);
-
+ 
   const filtered = bookings.filter((b) => filter === "all" || b.status === filter).sort((a, b) => (a.date < b.date ? 1 : -1));
   const counts = {
     all: bookings.length,
@@ -848,7 +954,7 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
     confirmed: bookings.filter((b) => b.status === "confirmed").length,
     rejected: bookings.filter((b) => b.status === "rejected").length,
   };
-
+ 
   const combinedLedger = useMemo(() => {
     const list = [];
     bookings.forEach((b) => {
@@ -864,7 +970,7 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
           isBooking: true,
           createdAt: b.createdAt,
         });
-
+ 
         // Pelunasan Entry if any
         if (b.pelunasan && b.pelunasan > 0) {
           list.push({
@@ -895,7 +1001,7 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
       return a.createdAt < b.createdAt ? 1 : -1;
     });
   }, [bookings, transactions]);
-
+ 
   // Extract unique months from ledger
   const uniqueMonths = useMemo(() => {
     const months = new Set();
@@ -908,13 +1014,13 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
     months.add(currentMonthISO);
     return Array.from(months).sort((a, b) => b.localeCompare(a));
   }, [combinedLedger, currentMonthISO]);
-
+ 
   // Filter ledger by selected month
   const filteredLedger = useMemo(() => {
     if (selectedMonth === "all") return combinedLedger;
     return combinedLedger.filter((item) => item.date && item.date.startsWith(selectedMonth));
   }, [combinedLedger, selectedMonth]);
-
+ 
   const financeSummary = useMemo(() => {
     let totalIncome = 0;
     let totalExpense = 0;
@@ -928,7 +1034,7 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
       balance: totalIncome - totalExpense
     };
   }, [filteredLedger]);
-
+ 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
@@ -945,7 +1051,7 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
           )}
         </div>
       </div>
-
+ 
       {/* Tab Selector */}
       <div className="flex border-b" style={{ borderColor: C.line }}>
         <button onClick={() => setAdminTab("bookings")} className="px-4 py-2 font-display text-sm font-semibold border-b-2"
@@ -957,7 +1063,7 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
           Buku Kas & Keuangan
         </button>
       </div>
-
+ 
       {adminTab === "bookings" ? (
         <>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -1025,7 +1131,7 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
               ))}
             </div>
           </div>
-
+ 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="rounded-2xl p-5" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
               <div className="flex items-center gap-2 mb-1">
@@ -1049,7 +1155,7 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
               <p className="font-display text-2xl font-bold text-white">{fmtIDR(financeSummary.balance)}</p>
             </div>
           </div>
-
+ 
           <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
             <div className="px-5 py-4 border-b flex items-center justify-between" style={{ borderColor: C.line }}>
               <h3 className="font-display font-bold text-sm" style={{ color: C.ink }}>Tabel Catatan Keuangan ({fmtMonthYear(selectedMonth)})</h3>
@@ -1107,18 +1213,18 @@ function AdminView({ bookings, updateBooking, removeBooking, addBooking, reload,
           </div>
         </>
       )}
-
+ 
       {manual && <ManualBookingModal onClose={() => setManual(false)} bookings={bookings} addBooking={addBooking} />}
       {showTxModal && <ManualTxModal onClose={() => setShowTxModal(false)} addTransaction={addTransaction} />}
     </div>
   );
 }
-
+ 
 function ManualTxModal({ onClose, addTransaction }) {
   const [form, setForm] = useState({ date: todayISO, type: "pengeluaran", amount: "", description: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const valid = form.date && form.amount && form.description.trim();
-
+ 
   const submit = async (e) => {
     e.preventDefault();
     if (!valid) return;
@@ -1132,7 +1238,7 @@ function ManualTxModal({ onClose, addTransaction }) {
     });
     onClose();
   };
-
+ 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: "rgba(15,20,30,0.55)" }}>
       <form onSubmit={submit} className="w-full max-w-md rounded-2xl p-6 effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
@@ -1160,7 +1266,7 @@ function ManualTxModal({ onClose, addTransaction }) {
     </div>
   );
 }
-
+ 
 function ManualBookingModal({ onClose, bookings, addBooking }) {
   const [form, setForm] = useState({ groomName: "", brideName: "", whatsapp: "", address: "", package: PACKAGES[0].id, date: "", guests: "" });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
@@ -1172,7 +1278,7 @@ function ManualBookingModal({ onClose, bookings, addBooking }) {
     await addBooking({
       id: uuid(), code: genCode(),
       groomName: form.groomName, brideName: form.brideName, whatsapp: form.whatsapp, address: form.address, date: form.date,
-      packageId: p.id, packageName: p.name, price: p.promo, bookingPay: 2000000, pelunasan: 0, guests: form.guests,
+      packageId: p.id, packageName: p.name, price: p.price, bookingPay: 2000000, pelunasan: 0, guests: form.guests,
       notes: "Booking dicatat manual oleh admin.", status: "confirmed", createdAt: new Date().toISOString(),
     });
     onClose();
@@ -1199,7 +1305,7 @@ function ManualBookingModal({ onClose, bookings, addBooking }) {
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Owner View                                                             */
 /* ---------------------------------------------------------------------- */
@@ -1211,12 +1317,12 @@ function OwnerView({ bookings, reload, transactions }) {
     return Object.entries(map).sort().map(([k, v]) => { const [y, m] = k.split("-"); return { bulan: `${MONTHS_ID[Number(m) - 1].slice(0, 3)} ${y.slice(2)}`, jumlah: v }; });
   }, [confirmed]);
   const byPackage = useMemo(() => PACKAGES.map((p) => ({ name: p.name, value: confirmed.filter((b) => b.packageId === p.id).length })).filter((p) => p.value > 0), [confirmed]);
-  const pieColors = [C.blue, C.orange, C.green];
-
+  const pieColors = [C.blue, C.orange, C.green, C.blueDeep, C.amber, C.red];
+ 
   // Default to current month YYYY-MM
   const currentMonthISO = useMemo(() => new Date().toISOString().slice(0, 7), []);
   const [selectedMonth, setSelectedMonth] = useState(currentMonthISO);
-
+ 
   const combinedLedger = useMemo(() => {
     const list = [];
     bookings.forEach((b) => {
@@ -1232,7 +1338,7 @@ function OwnerView({ bookings, reload, transactions }) {
           isBooking: true,
           createdAt: b.createdAt,
         });
-
+ 
         // Pelunasan Entry if any
         if (b.pelunasan && b.pelunasan > 0) {
           list.push({
@@ -1263,7 +1369,7 @@ function OwnerView({ bookings, reload, transactions }) {
       return a.createdAt < b.createdAt ? 1 : -1;
     });
   }, [bookings, transactions]);
-
+ 
   // Extract unique months from ledger
   const uniqueMonths = useMemo(() => {
     const months = new Set();
@@ -1275,13 +1381,13 @@ function OwnerView({ bookings, reload, transactions }) {
     months.add(currentMonthISO);
     return Array.from(months).sort((a, b) => b.localeCompare(a));
   }, [combinedLedger, currentMonthISO]);
-
+ 
   // Filter ledger by selected month
   const filteredLedger = useMemo(() => {
     if (selectedMonth === "all") return combinedLedger;
     return combinedLedger.filter((item) => item.date && item.date.startsWith(selectedMonth));
   }, [combinedLedger, selectedMonth]);
-
+ 
   const financeSummary = useMemo(() => {
     let totalIncome = 0;
     let totalExpense = 0;
@@ -1295,7 +1401,7 @@ function OwnerView({ bookings, reload, transactions }) {
       balance: totalIncome - totalExpense
     };
   }, [filteredLedger]);
-
+ 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
@@ -1305,7 +1411,7 @@ function OwnerView({ bookings, reload, transactions }) {
         </div>
         <Button variant="ghost" onClick={reload}><Icon name="RefreshCw" size={15} /> Muat Ulang</Button>
       </div>
-
+ 
       {/* Month Selector Filter Bar */}
       <div className="rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
         <div className="flex items-center gap-2">
@@ -1340,7 +1446,7 @@ function OwnerView({ bookings, reload, transactions }) {
           ))}
         </div>
       </div>
-
+ 
       {/* Keuangan Cards */}
       <div className="grid sm:grid-cols-4 gap-4">
         <div className="rounded-2xl p-5" style={{ background: BTN_GRAD }}>
@@ -1364,7 +1470,7 @@ function OwnerView({ bookings, reload, transactions }) {
           <p className="font-display text-2xl font-bold" style={{ color: C.ink }}>{confirmed.length}</p>
         </div>
       </div>
-
+ 
       <div className="grid lg:grid-cols-2 gap-4">
         <div className="rounded-2xl p-5" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
           <h3 className="font-display text-base font-bold mb-4" style={{ color: C.ink }}>Booking per Bulan</h3>
@@ -1395,7 +1501,7 @@ function OwnerView({ bookings, reload, transactions }) {
           )}
         </div>
       </div>
-
+ 
       {/* Tabel Catatan Keuangan Buku Kas (Read-Only) */}
       <div className="rounded-2xl overflow-hidden" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
         <div className="px-5 py-4 border-b flex items-center justify-between" style={{ borderColor: C.line }}>
@@ -1445,7 +1551,7 @@ function OwnerView({ bookings, reload, transactions }) {
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  App shell                                                              */
 /* ---------------------------------------------------------------------- */
@@ -1454,12 +1560,12 @@ function App() {
   const [gate, setGate] = useState(null);
   const { bookings, loading, error, reload, addBooking, updateBooking, removeBooking } = useBookings();
   const { transactions, txLoading, txError, reloadTx, addTransaction, removeTransaction } = useTransactions();
-
+ 
   const requestRole = (r) => { if (r === "admin" || r === "owner") setGate(r); else setRole("user"); };
-
+ 
   const combinedError = error || txError;
   const isAppLoading = loading || txLoading;
-
+ 
   return (
     <div className="min-h-screen font-body" style={{ backgroundColor: C.bg, color: C.ink }}>
       {role !== "user" && (
@@ -1471,7 +1577,7 @@ function App() {
           <button onClick={() => setRole("user")} className="font-body text-xs flex items-center gap-1.5" style={{ color: C.muted }}><Icon name="LogOut" size={13} /> Keluar</button>
         </div>
       )}
-
+ 
       <div className="fixed bottom-4 right-4 z-30 flex gap-1.5 rounded-full p-1 shadow-lg" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
         {[["user", "User"], ["admin", "Admin"], ["owner", "Owner"]].map(([r, l]) => (
           <button key={r} onClick={() => requestRole(r)} className="font-body text-[11px] font-bold px-3 py-1.5 rounded-full"
@@ -1480,9 +1586,9 @@ function App() {
           </button>
         ))}
       </div>
-
+ 
       {combinedError && <div className="rounded-xl p-3 m-4 font-body text-sm" style={{ backgroundColor: C.redSoft, color: C.red }}>{combinedError}</div>}
-
+ 
       {isAppLoading ? (
         <div className="py-24 text-center font-body text-sm" style={{ color: C.muted }}>Memuat data…</div>
       ) : role === "user" ? (
@@ -1505,9 +1611,9 @@ function App() {
           transactions={transactions}
         />
       )}
-
+ 
       <div className="h-16" />
-
+ 
       {gate && (
         <PinGate role={gate} pin={gate === "admin" ? ADMIN_PIN : OWNER_PIN}
           onSuccess={() => { setRole(gate); setGate(null); }} onCancel={() => setGate(null)} />
@@ -1515,7 +1621,7 @@ function App() {
     </div>
   );
 }
-
+ 
 /* ---------------------------------------------------------------------- */
 /*  Mount                                                                  */
 /* ---------------------------------------------------------------------- */
