@@ -150,3 +150,13 @@ input:focus, textarea:focus, select:focus {
 ::-webkit-scrollbar-thumb:hover {
   background: #0194F3;
 }
+.brand-3d-spin {
+  display: inline-block;
+  transform-style: preserve-3d;
+  animation: brandSpin3D 6s linear infinite;
+}
+@keyframes brandSpin3D {
+  0%   { transform: perspective(700px) rotateY(0deg); }
+  50%  { transform: perspective(700px) rotateY(180deg); }
+  100% { transform: perspective(700px) rotateY(360deg); }
+}

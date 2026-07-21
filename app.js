@@ -98,6 +98,7 @@ const MAKEUP_MAWAR = [
 const PACKAGES = [
   {
     id: "tenda-f", name: "Paket Tenda F", price: 11000000,
+    image: "gambar/1.jpg",
     tendaSize: "Tenda 80 m", panggung: "Panggung + pelaminan 4–5 m",
     grad: "linear-gradient(135deg,#005FBF,#0194F3)",
     features: [
@@ -115,6 +116,7 @@ const PACKAGES = [
   },
   {
     id: "tenda-e", name: "Paket Tenda E", price: 12000000,
+    image: "gambar/2.jpg",
     tendaSize: "Tenda 100 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#0194F3,#00A5FF)",
     features: [
@@ -132,6 +134,7 @@ const PACKAGES = [
   },
   {
     id: "tenda-d", name: "Paket Tenda D", price: 13500000,
+    image: "gambar/3.jpg",
     tendaSize: "Tenda 100 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#0A64C2,#005FBF)",
     features: [
@@ -149,6 +152,7 @@ const PACKAGES = [
   },
   {
     id: "tenda-c", name: "Paket Tenda C", price: 14500000,
+    image: "gambar/4.jpg",
     tendaSize: "Tenda 120 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#0056B3,#0A64C2)",
     tag: "Tenda dan Dekorasi Only",
@@ -167,6 +171,7 @@ const PACKAGES = [
   },
   {
     id: "tenda-b", name: "Paket Tenda B", price: 16000000,
+    image: "gambar/5.jpg",
     tendaSize: "Tenda 160 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#0041A3,#0056B3)",
     tag: "Tenda dan Dekorasi Only",
@@ -185,6 +190,7 @@ const PACKAGES = [
   },
   {
     id: "tenda-a", name: "Paket Tenda A", price: 19000000,
+    image: "gambar/6.jpg",
     tendaSize: "Tenda 200 m", panggung: "Panggung + pelaminan 6 m",
     grad: "linear-gradient(135deg,#00337A,#0041A3)",
     tag: "Tenda dan Dekorasi Only",
@@ -203,6 +209,7 @@ const PACKAGES = [
   },
   {
     id: "aio-aster", name: "Paket Aster", price: 21500000,
+    image: "gambar/7.jpg",
     tendaSize: "Tenda 80 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#FFB300,#FF8A00)",
     tag: "All in One Package",
@@ -224,6 +231,7 @@ const PACKAGES = [
   },
   {
     id: "aio-krisan", name: "Paket Krisan", price: 23500000,
+    image: "gambar/8.jpg",
     tendaSize: "Tenda 100 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#FF9800,#FF7A1F)",
     tag: "All in One Package",
@@ -245,6 +253,7 @@ const PACKAGES = [
   },
   {
     id: "aio-mawar", name: "Paket Mawar", price: 25500000,
+    image: "gambar/9.jpg",
     tendaSize: "Tenda 120 m", panggung: "Panggung + pelaminan 4–6 m",
     grad: "linear-gradient(135deg,#FF7A1F,#FF5E1F)",
     tag: "All in One Package",
@@ -551,7 +560,7 @@ function TopBar({ title, subtitle, onBack, gradient = false, right, brandMode = 
         )}
         <div className="flex-1">
           {brandMode ? (
-            <h1 className="brand-3d-text font-display font-extrabold text-2xl sm:text-3xl leading-tight">{title}</h1>
+            <h1 className="brand-3d-text brand-3d-spin font-display font-extrabold text-2xl sm:text-3xl leading-tight">{title}</h1>
           ) : (
             <h1 className="font-display font-bold text-lg sm:text-xl text-white leading-tight">{title}</h1>
           )}
@@ -665,7 +674,16 @@ function PackageCard({ pkg, onSelect }) {
   const [expanded, setExpanded] = useState(false);
   return (
     <div className="rounded-2xl overflow-hidden effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
-      <div className="h-28 relative flex items-end p-4" style={{ background: pkg.grad }}>
+      <div className="h-28 relative flex items-end p-4 overflow-hidden" style={{ background: pkg.grad }}>
+        {pkg.image && (
+          <img
+            src={pkg.image}
+            alt={pkg.name}
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => { e.target.style.display = "none"; }}
+          />
+        )}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.65) 100%)" }} />
         <span className="font-display text-white font-bold text-lg drop-shadow relative z-10">{pkg.name}</span>
         {pkg.tag && (
           <span className="absolute top-3 left-3 px-2 py-1 rounded-lg font-body text-[10px] font-bold z-10" style={{ backgroundColor: "rgba(255,255,255,0.92)", color: C.ink }}>
