@@ -68,6 +68,33 @@ const FREE_STANDARD = [
   "Smoke area & Meeting konsep",
 ];
 
+/* -- Paket All in One (tenda + makeup + dokumentasi) -------------------- */
+const FREE_AIO_ASTER = ["Transport 10 km", "1 janur", "2 buku tamu", "Handbucket", "Survey area"];
+const FREE_AIO_KRISAN_MAWAR = ["Transport 10 km", "1 janur", "2 buku tamu", "2 mini galeri", "Handbucket", "Survey area"];
+
+const AIO_MAKEUP_FEATURES = [
+  "Make up & Retouch", "3 stel gown", "3 stel jaz pria", "Slop pengantin & aksesoris",
+  "2 make ibu & 2 kebaya", "2 jaz bapak", "Make up & kebaya pager ayu 4", "Melati fresh", "Soflens",
+];
+const AIO_DOKUMENTASI_FEATURES = [
+  "Fotografer & videografer", "Album kolase", "Video sinematik", "Pembesaran foto 17R", "All file foto", "Flashdisk",
+];
+
+const MAKEUP_ASTER = [
+  "srimulyati_makeup26", "Adesyahrita_mua", "Hamiyah.hennamua", "Zaenalmakeup", "Hazellamakeup",
+  "syifa_ramadhantyy", "Linamakeup94", "Dry_Wedding", "indriyani.95", "ayumariawedding", "nia_niamakeup",
+];
+const MAKEUP_KRISAN = [
+  "Vitrivitoy", "imasrasmana", "aisyahmakailah", "sfbeauty21", "makeup_sae", "saepulmakeup1992",
+  "nr.makeup_wedding", "mianah_wedding", "kayulimakeup", "igaratnagaluh_", "sekargallery_",
+];
+const MAKEUP_MAWAR = [
+  "diean_anggraini", "feni_wedding", "Donnamakeup93", "indahkn_mua", "mitaamakeup", "Deparyati_wedding",
+  "nengyuni_mua", "mellaristiyanie.mua", "ipeh_herlangga", "adedianamakeup", "lilis_khaerunnisa",
+  "debyselvia_weding", "dwiaprinianingrum", "Bungaarab_wedding", "Florence.Mua", "fuah_makeup",
+  "colour_wedding", "igaratnagaluh_", "Suhevi_mua", "Makeupby_rini", "rins_makeup", "ossy_wedding", "by_zee_makeup",
+];
+
 const PACKAGES = [
   {
     id: "tenda-f", name: "Paket Tenda F", price: 11000000,
@@ -174,7 +201,94 @@ const PACKAGES = [
     ],
     freeItems: [],
   },
+  {
+    id: "aio-aster", name: "Paket Aster", price: 21500000,
+    tendaSize: "Tenda 80 m", panggung: "Panggung + pelaminan 4–6 m",
+    grad: "linear-gradient(135deg,#FFB300,#FF8A00)",
+    tag: "All in One Package",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign",
+      "Blower 2 pcs", "Rolltop 4 pcs",
+      "Meja prasmanan 1 pcs", "Tempat nasi 1 pcs", "Termos nasi 1 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Kenceng 1", "Semawar 2", "Langseng 1",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+    ],
+    makeupFeatures: AIO_MAKEUP_FEATURES,
+    dokumentasiFeatures: AIO_DOKUMENTASI_FEATURES,
+    makeupOptions: MAKEUP_ASTER,
+    freeItems: FREE_AIO_ASTER,
+  },
+  {
+    id: "aio-krisan", name: "Paket Krisan", price: 23500000,
+    tendaSize: "Tenda 100 m", panggung: "Panggung + pelaminan 4–6 m",
+    grad: "linear-gradient(135deg,#FF9800,#FF7A1F)",
+    tag: "All in One Package",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign",
+      "Blower 2 pcs", "Rolltop 6 pcs",
+      "Meja prasmanan 1 pcs", "Tempat nasi 1 pcs", "Termos nasi 1 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 1 pcs", "Wadah es buah 1 pcs",
+      "Kenceng 1", "Semawar 1", "Langseng 1",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+    ],
+    makeupFeatures: AIO_MAKEUP_FEATURES,
+    dokumentasiFeatures: AIO_DOKUMENTASI_FEATURES,
+    makeupOptions: MAKEUP_KRISAN,
+    freeItems: FREE_AIO_KRISAN_MAWAR,
+  },
+  {
+    id: "aio-mawar", name: "Paket Mawar", price: 25500000,
+    tendaSize: "Tenda 120 m", panggung: "Panggung + pelaminan 4–6 m",
+    grad: "linear-gradient(135deg,#FF7A1F,#FF5E1F)",
+    tag: "All in One Package",
+    features: [
+      "Kursi pengantin 1 set (ready stok, tidak bisa pilih)",
+      "Setting meja akad", "Full karpet",
+      "Kursi Futura 100 pcs + cover",
+      "Gazebo/Gate jalan", "Gapura masuk", "Welcome sign",
+      "Blower 2 pcs", "Rolltop 8 pcs",
+      "Meja prasmanan 2 pcs", "Tempat nasi 2 pcs", "Termos nasi 2 pcs",
+      "Alat makan (PSG) 200 pcs", "Toples kerupuk 2 pcs", "Wadah es buah 1 pcs",
+      "Kenceng 1", "Semawar 2", "Langseng 2",
+      "Gubukan 2 pcs", "Meja penerima tamu 2 pcs", "Kotak amplop 2 pcs",
+    ],
+    makeupFeatures: AIO_MAKEUP_FEATURES,
+    dokumentasiFeatures: AIO_DOKUMENTASI_FEATURES,
+    makeupOptions: MAKEUP_MAWAR,
+    freeItems: FREE_AIO_KRISAN_MAWAR,
+  },
 ];
+
+/* -- Paket Tambahan (add-on): MC, Entertainment, Fotografer ------------- */
+const ADDON_MC = [
+  {
+    priceAkad: 900000, priceResepsi: 1300000,
+    names: ["Lulu_nazila", "immanursaputri", "Ikmauludi_mc", "meyayu_mc", "Aprilbabang_mc", "anitasari_mc", "Maulidiariskamc", "Husna_mc"],
+  },
+  {
+    priceAkad: 1000000, priceResepsi: 1500000,
+    names: ["Danzi255", "alam_Syahmc", "yadilahasa_mc", "zaynazzam.mc", "Iqbalibnurosyam_mc"],
+  },
+];
+const ADDON_ENTERTAINMENT = { akustik: 4300000, orgenTunggal: 4000000 };
+const ADDON_PHOTOGRAPHER = {
+  names: [
+    "Magentaphotography.id", "atvisual_photography", "anam_portrait", "ilham_photographyy",
+    "asal_potret7", "Agusgraphy", "ei_photograph", "acunkmoto", "flow.motret17",
+    "Snapshoot.foto", "sidik_photography", "rahmanmotret",
+  ],
+  extra: {
+    price: 500000,
+    names: ["Razqa_photography", "Ridhomoto", "rhiviephotography", "okana.pictures", "kfgproject", "donii.moto", "rzkimaw", "adimotoin", "Rumah_album"],
+  },
+};
 
 const STATUS_META = {
   pending:   { label: "Menunggu Konfirmasi", color: C.amber, soft: C.amberSoft },
@@ -575,27 +689,139 @@ function PackageCard({ pkg, onSelect }) {
           <Icon name={expanded ? "ChevronUp" : "ChevronDown"} size={13} />
         </button>
         {expanded && (
-          <ul className="font-body text-xs space-y-1.5 mb-4">
-            {pkg.features.map((f, i) => (
-              <li key={i} className="flex items-start gap-1.5" style={{ color: C.ink }}>
-                <Icon name="Check" size={12} color={C.green} className="mt-0.5" /> <span>{f}</span>
-              </li>
-            ))}
-            {pkg.freeItems.length > 0 && (
-              <>
-                <li className="font-semibold pt-1" style={{ color: C.ink }}>Gratis:</li>
-                {pkg.freeItems.map((f, i) => (
-                  <li key={"free" + i} className="flex items-start gap-1.5" style={{ color: C.muted }}>
-                    <Icon name="Gift" size={12} color={C.amber} className="mt-0.5" /> <span>{f}</span>
+          <>
+            <ul className="font-body text-xs space-y-1.5 mb-3">
+              <li className="font-semibold pt-0.5" style={{ color: C.ink }}>Tenda & Dekorasi:</li>
+              {pkg.features.map((f, i) => (
+                <li key={i} className="flex items-start gap-1.5" style={{ color: C.ink }}>
+                  <Icon name="Check" size={12} color={C.green} className="mt-0.5" /> <span>{f}</span>
+                </li>
+              ))}
+              {pkg.makeupFeatures && pkg.makeupFeatures.length > 0 && (
+                <>
+                  <li className="font-semibold pt-1 flex items-center gap-1.5" style={{ color: C.ink }}>
+                    <Icon name="Sparkles" size={12} color={C.orange} /> Make Up:
                   </li>
-                ))}
-              </>
+                  {pkg.makeupFeatures.map((f, i) => (
+                    <li key={"mu" + i} className="flex items-start gap-1.5" style={{ color: C.ink }}>
+                      <Icon name="Check" size={12} color={C.green} className="mt-0.5" /> <span>{f}</span>
+                    </li>
+                  ))}
+                </>
+              )}
+              {pkg.dokumentasiFeatures && pkg.dokumentasiFeatures.length > 0 && (
+                <>
+                  <li className="font-semibold pt-1 flex items-center gap-1.5" style={{ color: C.ink }}>
+                    <Icon name="Camera" size={12} color={C.blueDeep} /> Dokumentasi:
+                  </li>
+                  {pkg.dokumentasiFeatures.map((f, i) => (
+                    <li key={"dok" + i} className="flex items-start gap-1.5" style={{ color: C.ink }}>
+                      <Icon name="Check" size={12} color={C.green} className="mt-0.5" /> <span>{f}</span>
+                    </li>
+                  ))}
+                </>
+              )}
+              {pkg.freeItems.length > 0 && (
+                <>
+                  <li className="font-semibold pt-1" style={{ color: C.ink }}>Gratis:</li>
+                  {pkg.freeItems.map((f, i) => (
+                    <li key={"free" + i} className="flex items-start gap-1.5" style={{ color: C.muted }}>
+                      <Icon name="Gift" size={12} color={C.amber} className="mt-0.5" /> <span>{f}</span>
+                    </li>
+                  ))}
+                </>
+              )}
+            </ul>
+            {pkg.makeupOptions && pkg.makeupOptions.length > 0 && (
+              <div className="rounded-xl p-3 mb-4" style={{ backgroundColor: C.orangeSoft }}>
+                <p className="font-body text-xs font-semibold mb-2 flex items-center gap-1.5" style={{ color: C.orange }}>
+                  <Icon name="Sparkles" size={12} color={C.orange} /> Pilihan Akun Makeup ({pkg.makeupOptions.length})
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {pkg.makeupOptions.map((m, i) => (
+                    <span key={i} className="font-body text-[10px] font-medium px-2 py-1 rounded-full" style={{ backgroundColor: C.paper, color: C.ink, border: `1px solid ${C.line}` }}>
+                      @{m}
+                    </span>
+                  ))}
+                </div>
+              </div>
             )}
-          </ul>
+          </>
         )}
         <Button variant="primary" className="w-full effect-3d-btn" onClick={() => onSelect(pkg)}>
           Pilih Paket Ini <Icon name="ArrowRight" size={15} />
         </Button>
+      </div>
+    </div>
+  );
+}
+
+function VendorChips({ names }) {
+  return (
+    <div className="flex flex-wrap gap-1.5">
+      {names.map((n, i) => (
+        <span key={i} className="font-body text-[10px] font-medium px-2 py-1 rounded-full" style={{ backgroundColor: C.bg, color: C.ink, border: `1px solid ${C.line}` }}>
+          @{n}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function AddonCard({ icon, iconColor, title, children }) {
+  const [expanded, setExpanded] = useState(false);
+  return (
+    <div className="rounded-2xl overflow-hidden effect-3d-card" style={{ backgroundColor: C.paper, border: `1px solid ${C.line}` }}>
+      <button type="button" onClick={() => setExpanded((e) => !e)} className="w-full flex items-center justify-between p-4">
+        <span className="flex items-center gap-2 font-display text-sm font-bold" style={{ color: C.ink }}>
+          <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: C.cyan }}>
+            <Icon name={icon} size={15} color={iconColor} />
+          </span>
+          {title}
+        </span>
+        <Icon name={expanded ? "ChevronUp" : "ChevronDown"} size={16} color={C.muted} />
+      </button>
+      {expanded && <div className="px-4 pb-4">{children}</div>}
+    </div>
+  );
+}
+
+function AddonServicesSection() {
+  return (
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-10">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="font-display text-base font-bold" style={{ color: C.ink }}>Paket Tambahan</h2>
+        <span className="font-body text-xs" style={{ color: C.muted }}>MC · Entertainment · Fotografer</span>
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <AddonCard icon="Mic2" iconColor={C.blueDeep} title="Master of Ceremony">
+          {ADDON_MC.map((tier, ti) => (
+            <div key={ti} className={ti > 0 ? "mt-4 pt-4" : ""} style={ti > 0 ? { borderTop: `1px solid ${C.line}` } : {}}>
+              <p className="font-body text-xs mb-2" style={{ color: C.ink }}>
+                MC akad nikah: <span className="font-bold">{fmtIDR(tier.priceAkad)}</span><br />
+                MC akad resepsi: <span className="font-bold">{fmtIDR(tier.priceResepsi)}</span>
+              </p>
+              <VendorChips names={tier.names} />
+            </div>
+          ))}
+        </AddonCard>
+
+        <AddonCard icon="Music4" iconColor={C.orange} title="Entertainment">
+          <ul className="font-body text-xs space-y-1 mb-1" style={{ color: C.ink }}>
+            <li>Akustik: <span className="font-bold">{fmtIDR(ADDON_ENTERTAINMENT.akustik)}</span></li>
+            <li>Orgen Tunggal: <span className="font-bold">{fmtIDR(ADDON_ENTERTAINMENT.orgenTunggal)}</span></li>
+          </ul>
+          <p className="font-body text-[11px]" style={{ color: C.muted }}>Info & pemesanan hubungi admin via WhatsApp.</p>
+        </AddonCard>
+
+        <AddonCard icon="Camera" iconColor={C.green} title="Pilihan Fotografer">
+          <p className="font-body text-xs font-semibold mb-2" style={{ color: C.ink }}>Fotografer standar:</p>
+          <VendorChips names={ADDON_PHOTOGRAPHER.names} />
+          <p className="font-body text-xs font-semibold mt-4 mb-2" style={{ color: C.ink }}>
+            Ekstra kelas ({fmtIDR(ADDON_PHOTOGRAPHER.extra.price)}):
+          </p>
+          <VendorChips names={ADDON_PHOTOGRAPHER.extra.names} />
+        </AddonCard>
       </div>
     </div>
   );
@@ -634,6 +860,8 @@ function PackageListScreen({ bookings, onSelectPackage, onOpenCalendar, onOpenCh
           {PACKAGES.map((p) => <PackageCard key={p.id} pkg={p} onSelect={onSelectPackage} />)}
         </div>
       </div>
+
+      <AddonServicesSection />
     </div>
   );
 }
